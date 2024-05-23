@@ -1,1 +1,10 @@
-utf8
+[
+  {
+    "firstname": "xnight",
+    "lastname": "dev",
+    "othernames": "code",
+    "email": "lesuuh01@gmail.com",
+    "phone": "09075605471",
+    "gender": "male"
+  }
+]
