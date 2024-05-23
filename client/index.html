@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <h2>User Registration</h2>
+    <form action="/submit" id="user-form" method="post">
+      <div class="header"><p>Registration</p></div>
+      <div class="form-body">
+        <div>
+          <label for="firstname" class="required">Firstname</label>
+          <input type="text" name="firstname" id="firstname" />
+          <span id="firstname-error" class="error"></span>
+        </div>
+        <br />
+        <div>
+          <label for="lastname" class="required">Lastname</label>
+          <input type="text" name="lastname" id="lastname" />
+          <span id="lastname-error" class="error"></span>
+        </div>
+        <br />
+        <div>
+          <label for="othernames">Othername</label>
+          <input type="text" name="othernames" id="othernames" />
+          
+        </div>
+        <br />
+        <div>
+          <label for="email" class="required">Email</label>
+          <input type="email" name="email" id="email" />
+          <span id="email-error" class="error"></span>
+        </div>
+        <br />
+        <div>
+          <label for="phone" class="required">Phone Number</label>
+          <input type="text" name="phone" id="phone" />
+          <span id="phone-error" class="error"></span>
+        </div>
+        <br />
+        <div>
+          <label for="gender" class="required">Gender</label>
+          <select name="gender" id="gender">
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <span id="gender-error" class="error"></span>
+        </div>
+        <br />
+        <div>
+          <input type="submit" value="Submit" id="submit" />
+        </div>
+      </div>
+    </form>
+
+    <script src="./js/app.js"></script>
+  </body>
+</html>
+
+<!-- a. First name
+b. Last name
+c. Other names
+d. Email address
+e. Phone number
+f. Gender (Dropdown)
+g. Submit button -->
