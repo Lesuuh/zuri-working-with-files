@@ -1,5 +1,4 @@
-const http = require("http");
-const fs = require("fs");
+const fs = require("fs").promises;
 const path = require("path");
 const express = require("express");
 const app = express();
@@ -15,14 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 const filePath = path.join(__dirname, "..", "db", "database.json");
 
 // validation function
-function validateForm({
-  firstname,
-  lastname,
-  othernames,
-  phone,
-  email,
-  gender,
-}) {
+function validateForm({ firstname, lastname, othernames, phone, email, gender }) {
   const errors = {};
 
   if (firstname === "") {
@@ -56,7 +48,7 @@ function validateForm({
   return errors;
 }
 
-app.post("/submit", (req, res) => {
+app.post("/submit", async (req, res) => {
   const { firstname, lastname, othernames, email, phone, gender } = req.body;
 
   const errors = validateForm({
@@ -69,41 +61,40 @@ app.post("/submit", (req, res) => {
   });
 
   if (Object.keys(errors).length) {
-    // console.log(errors);
     res.status(400).json({ errors });
     return;
   }
 
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.log("File could not be read");
-      res.status(500).json({ message: "Internal Server Error" });
-      return;
-    } else {
+  try {
+    let data;
+    try {
+      data = await fs.readFile(filePath, "utf8");
       console.log("File Read Successfully");
+    } catch (err) {
+      if (err.code === "ENOENT") {
+        console.log("File does not exist, initializing new database");
+        data = "[]"; // Initialize with an empty array if file does not exist
+      } else {
+        throw err;
+      }
     }
 
-    let database = [];
-    if (data) {
-      database = JSON.parse(data);
-    }
-
+    const database = JSON.parse(data);
     database.push(req.body);
 
-    fs.writeFile(filePath, JSON.stringify(database, null, 2), (err) => {
-      if (err) {
-        console.log("File Could not be written");
-        res.status(500).json({ message: "Internal Server Error" });
-      } else {
-        console.log("File written Successfully");
-        res.status(200).json({ message: "Data saved successfully" });
-      }
-    });
-  });
+    await fs.writeFile(filePath, JSON.stringify(database, null, 2));
+    console.log("File written Successfully");
+    res.status(200).json({ message: "Data saved successfully" });
+
+  } catch (err) {
+    console.log("An error occurred", err);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
-const server = http.createServer(app);
 const port = process.env.PORT || 4000;
-server.listen(port, () => {
-  console.log("Server is running on port 4000");
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
+
+module.exports = app;
