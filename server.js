@@ -27,13 +27,13 @@ function validateForm({ firstname, lastname, phone, email, gender }) {
   if (firstname === "") {
     errors.firstname = "Firstname cannot be less than 1 letter";
   } else if (!/^[a-zA-Z]+$/.test(firstname)) {
-    errors.firstname("Firstname cannot contain numbers");
+    errors.firstname = "Firstname cannot contain numbers";
   }
 
   if (lastname === "") {
-    errors.firstname = "Lastname cannot be less than 1 letter";
+    errors.lastname = "Lastname cannot be less than 1 letter";
   } else if (!/^[a-zA-Z]+$/.test(lastname)) {
-    errors.firstname("lastname cannot contain numbers");
+    errors.lastname = "Lastname cannot contain numbers";
   }
 
   const emailRegex = /^\S+@\S+\.\S+$/;
@@ -46,28 +46,30 @@ function validateForm({ firstname, lastname, phone, email, gender }) {
   }
 
   if (gender === "") {
-    errors.gender = "Please select your freaking gender";
+    errors.gender = "Please select your gender";
   }
 
-  return error;
+  return errors;
 }
 
 app.post("/submit", (req, res) => {
   const { firstname, lastname, othernames, email, phone, gender } = req.body;
 
-  //   const errors =
-  validateForm(firstname, lastname, othernames, email, phone, gender);
+  const errors = validateForm({ firstname, lastname, phone, email, gender });
 
-  //   if (Object.keys(errors.length)) {
-  //     console.log(error);
-  //     res.status(400).json({ errors });
-  //   }
+  if (Object.keys(errors).length) {
+    console.log(errors);
+    res.status(400).json({ errors });
+    return;
+  }
 
   fs.readFile(filePath, "utf8", (err, data) => {
     if (err) {
       console.log("File could not be read");
+      res.status(500).json({ message: "Internal Server Error" });
+      return;
     } else {
-      console.log("File Read Succesfully");
+      console.log("File Read Successfully");
     }
 
     let database = [];
@@ -80,8 +82,10 @@ app.post("/submit", (req, res) => {
     fs.writeFile(filePath, JSON.stringify(database, null, 2), (err) => {
       if (err) {
         console.log("File Could not be written");
+        res.status(500).json({ message: "Internal Server Error" });
       } else {
-        console.log("File written Successfuly");
+        console.log("File written Successfully");
+        res.status(200).json({ message: "Data saved successfully" });
       }
     });
   });
@@ -90,5 +94,5 @@ app.post("/submit", (req, res) => {
 const server = http.createServer(app);
 
 server.listen(5000, () => {
-  console.log("Server is running");
+  console.log("Server is running on port 5000");
 });
