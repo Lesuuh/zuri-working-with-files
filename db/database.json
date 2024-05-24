@@ -1,50 +1,34 @@
 [
   {
     "firstname": "xnight",
-    "lastname": "dev2",
+    "lastName": "dev",
     "othernames": "code",
-    "email": "test1@gmail.com",
-    "phone": "+2349075605471",
-    "gender": "male"
-  },
-  {
-    "firstname": "xnight",
-    "lastname": "dev2",
-    "othernames": "code",
-    "email": "test1@gmail.com",
-    "phone": "+2349075605471",
-    "gender": "male"
-  },
-  {
-    "firstname": "xnight",
-    "lastname": "dev",
-    "othernames": "code",
-    "email": "test1@gmail.com",
-    "phone": "+2349075605471",
-    "gender": "male"
-  },
-  {
-    "firstname": "xnight",
-    "lastname": "dev",
-    "othernames": "code",
-    "email": "test1@gmail.com",
-    "phone": "2349075605471",
-    "gender": "male"
-  },
-  {
-    "firstname": "xnight",
-    "lastname": "dev",
-    "othernames": "code",
-    "email": "test1@gmail.com",
+    "email": "lesuuh01@gmail.com",
     "phone": "09075605471",
     "gender": "male"
   },
   {
-    "firstname": "",
-    "lastname": "",
-    "othernames": "",
-    "email": "",
-    "phone": "",
-    "gender": ""
+    "firstname": "xnight",
+    "lastName": "dev",
+    "othernames": "code",
+    "email": "lesuuh01@gmail.com",
+    "phone": "09075605471",
+    "gender": "male"
+  },
+  {
+    "firstname": "xnight",
+    "lastName": "dev53",
+    "othernames": "code",
+    "email": "lesuuh01@gmail.com",
+    "phone": "09075605471",
+    "gender": "male"
+  },
+  {
+    "firstname": "xnight",
+    "lastName": "dev",
+    "othernames": "code",
+    "email": "test1@gmail.com",
+    "phone": "9075605471",
+    "gender": "male"
   }
 ]

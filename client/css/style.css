@@ -1,9 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-
-
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 .error {
   color: red;
-  font-size: .7rem;
+  font-size: 0.7rem;
   padding-top: 1px;
 }
 
@@ -15,17 +18,19 @@ body {
   align-items: center;
   justify-content: center;
   font-family: "Quicksand", Helvetica, sans-serif;
+  background: linear-gradient(to bottom, #e0f7fa, #ffffff);
+  padding: 20px 10px;
+
 }
 
 form {
-  max-width: 300px;
   width: 100%;
+  max-width: 300px;
   height: auto;
   display: flex;
   box-shadow: 3px 3px 1px rgba(245, 244, 244, 0.5),
     -3px -3px 1px rgba(245, 244, 244, 0.5);
   background: #fff;
-  padding: 10px;
   border-radius: 5px;
   position: relative;
 }
@@ -38,18 +43,22 @@ form {
   left: 0;
   right: 0;
   border-radius: 5px 5px 0 0;
+  /* height: 50px; */
+  padding-bottom: 10px;
+
 }
 
 .header p {
   padding-left: 10px;
   color: #fff;
   font-size: 0.8rem;
+  padding-top: 10px;
 }
 
 .form-body {
   padding-block: 60px;
   width: 100%;
-  padding-inline: 10px;
+  padding-inline: 20px;
 }
 
 .form-body div {
@@ -87,12 +96,19 @@ input[type="submit"]:hover {
 
 select {
   padding: 8px 10px;
+  font-size: 0.8rem;
+  color: rgba(29, 27, 27, 0.966);
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  background: #fff;
 }
 select option {
   font-size: 0.8rem;
 }
 
 .required::after {
-  content: " *";
+  content: "*";
   color: red;
+  font-size: 1rem;
 }

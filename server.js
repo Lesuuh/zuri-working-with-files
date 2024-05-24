@@ -2,7 +2,6 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const { error } = require("console");
 const app = express();
 
 // MIDDLEWARES
@@ -21,7 +20,14 @@ const filePath = path.join(__dirname, "db", "database.json");
 // });
 
 // validation function
-function validateForm({ firstname, lastname, phone, email, gender }) {
+function validateForm({
+  firstname,
+  lastname,
+  othernames,
+  phone,
+  email,
+  gender,
+}) {
   const errors = {};
 
   if (firstname === "") {
@@ -29,11 +35,14 @@ function validateForm({ firstname, lastname, phone, email, gender }) {
   } else if (!/^[a-zA-Z]+$/.test(firstname)) {
     errors.firstname = "Firstname cannot contain numbers";
   }
-
   if (lastname === "") {
     errors.lastname = "Lastname cannot be less than 1 letter";
   } else if (!/^[a-zA-Z]+$/.test(lastname)) {
     errors.lastname = "Lastname cannot contain numbers";
+  }
+
+  if (!/^[a-zA-Z]+$/.test(othernames)) {
+    errors.othernames = "Othernames cannot contain numbers";
   }
 
   const emailRegex = /^\S+@\S+\.\S+$/;
@@ -55,10 +64,17 @@ function validateForm({ firstname, lastname, phone, email, gender }) {
 app.post("/submit", (req, res) => {
   const { firstname, lastname, othernames, email, phone, gender } = req.body;
 
-  const errors = validateForm({ firstname, lastname, phone, email, gender });
+  const errors = validateForm({
+    firstname,
+    lastname,
+    othernames,
+    phone,
+    email,
+    gender,
+  });
 
   if (Object.keys(errors).length) {
-    console.log(errors);
+    // console.log(errors);
     res.status(400).json({ errors });
     return;
   }

@@ -64,7 +64,60 @@ function validateForm() {
   return error;
 }
 
-form.addEventListener("submit", (e) => {
-  //   e.preventDefault();
-  validateForm();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const hasErrors = validateForm();
+
+  if (hasErrors) {
+    return;
+  }
+
+  const formData = {
+    firstname: document.getElementById("firstname").value,
+    lastName: document.getElementById("lastname").value,
+    othernames: document.getElementById("othernames").value,
+    email: document.getElementById("email").value,
+    phone: document.getElementById("phone").value,
+    gender: document.getElementById("gender").value,
+  };
+
+  try {
+    // sending the data to the server
+    const response = await fetch("/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+
+    const data = await response.json();
+
+    // if the response is not ok
+    if (!response.ok) {
+      // and if the data object contains the errors
+      if (data.errors) {
+        console.log(data.errors);
+        // set the error message to its respective span tag
+        Object.keys(data.errors).forEach((key) => {
+          const span = document.getElementById(`${key}-error`);
+          span.textContent = data.errors[key];
+        });
+      } else {
+        console.error("error", data);
+      }
+    } else {
+      console.log({ data: data });
+        alert("Form submitted successfully and its been sent to database");
+      // clear the form field
+      form.reset();
+      // clearing the errors if the response is now ok
+      document.querySelectorAll(".error").forEach((span) => {
+        span.textContent = "";
+      });
+    }
+  } catch (error) {
+    console.error("Error", error);
+  }
 });
