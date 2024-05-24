@@ -6,18 +6,13 @@ const app = express();
 
 // MIDDLEWARES
 // middleware to load up the html
-app.use(express.static(path.join(__dirname, "client")));
+app.use(express.static(path.join(__dirname, "..", "client")));
 // middleware to parse json
 app.use(express.json());
 // middleware to parse body from html forms
 app.use(express.urlencoded({ extended: true }));
 
-const filePath = path.join(__dirname, "db", "database.json");
-
-// fs.unlink(filePath, (err) => {
-//   if (err) throw err;
-//   console.log("file deleted");
-// });
+const filePath = path.join(__dirname, "..", "db", "database.json");
 
 // validation function
 function validateForm({
@@ -108,7 +103,7 @@ app.post("/submit", (req, res) => {
 });
 
 const server = http.createServer(app);
-
-server.listen(5000, () => {
-  console.log("Server is running on port 5000");
+const port = process.env.PORT || 4000;
+server.listen(port, () => {
+  console.log("Server is running on port 4000");
 });
